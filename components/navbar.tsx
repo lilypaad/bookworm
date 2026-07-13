@@ -5,7 +5,7 @@ import Link from "next/link"
 import {BookOpen} from "lucide-react"
 import {usePathname} from "next/navigation"
 import {cn} from "@/lib/utils";
-import { ClerkProvider, Show, SignInButton, SignUpButton, UserButton, useUser } from '@clerk/nextjs'
+import { Show, SignInButton, UserButton, useUser } from '@clerk/nextjs'
 
 const navItems = [
   { label: "Library", href: "/" },
