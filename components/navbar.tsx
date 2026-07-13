@@ -17,8 +17,8 @@ const Navbar = () => {
   const { user } = useUser();
 
   return (
-    <header className="w-full fixed z-50">
-      <div className="wrapper navbar-height py-4 px-4 flex justify-between items-center">
+    <header className="container mx-auto">
+      <div className="py-4 flex justify-between items-center">
         {/* Logo */}
         <Link href="/" className="flex gap-0.5 items-center">
           <BookOpen width={34} height={32} className="pt-1" />
@@ -26,7 +26,7 @@ const Navbar = () => {
         </Link>
 
         {/* navbar items */}
-        <nav className="w-fit flex gap-6.5 items-center pr-1">
+        <nav className="flex gap-x-7 items-center overflow-x-auto">
           {navItems.map(({ label, href }) => {
             const isActive = pathName === href || (href !== '/' && pathName.startsWith(href))
             return (

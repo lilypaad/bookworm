@@ -72,7 +72,7 @@ export default function RootLayout({
       className={`${ibmPlexSerif.variable} ${monaSans.variable} ${ppEditorialOld.variable} h-full relative 
       font-sans antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body>
         <ClerkProvider>
           <Navbar />
           {children}
