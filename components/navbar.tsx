@@ -5,6 +5,7 @@ import Link from "next/link"
 import {BookOpen} from "lucide-react"
 import {usePathname} from "next/navigation"
 import {cn} from "@/lib/utils";
+import { ClerkProvider, Show, SignInButton, SignUpButton, UserButton, useUser } from '@clerk/nextjs'
 
 const navItems = [
   { label: "Library", href: "/" },
@@ -13,15 +14,18 @@ const navItems = [
 
 const Navbar = () => {
   const pathName = usePathname()
+  const { user } = useUser();
 
   return (
-    <header className="w-full fixed z-50 bg-('--bg-primary')">
+    <header className="w-full fixed z-50">
       <div className="wrapper navbar-height py-4 px-4 flex justify-between items-center">
+        {/* Logo */}
         <Link href="/" className="flex gap-0.5 items-center">
           <BookOpen width={34} height={32} className="pt-1" />
           <span className="font-serif font-bold text-2xl align-[20px]">Bookworm</span>
         </Link>
 
+        {/* navbar items */}
         <nav className="w-fit flex gap-6.5 items-center pr-1">
           {navItems.map(({ label, href }) => {
             const isActive = pathName === href || (href !== '/' && pathName.startsWith(href))
@@ -40,6 +44,21 @@ const Navbar = () => {
               </Link>
             )
           })}
+          <div className="flex gap-2 items-center">
+            <Show when="signed-out">
+              <div className="text-xl font-normal text-black hover:opacity-70">
+                <SignInButton />
+              </div>
+            </Show>
+            <Show when="signed-in">
+              <UserButton />
+              {user?.firstName && (
+                <Link href="/subscriptions" className="text-xl text-black hover:opacity-70">
+                  {user.firstName}
+                </Link>
+              )}
+            </Show>
+          </div>
         </nav>
       </div>
     </header>
