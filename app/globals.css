@@ -123,6 +123,30 @@
   --blue: #c8553d;
 }
 
+@layer components {
+  .new-book-wrapper {
+    @apply max-w-2xl mx-auto p-8 bg-background;
+  }
+  .form-label {
+    @apply block text-sm font-medium text-foreground mb-2 font-serif;
+  }
+  .form-input {
+    @apply w-full p-3 rounded-lg border border-input bg-card text-foreground font-sans;
+  }
+  .upload-dropzone {
+    @apply border-2 border-dashed border-input rounded-xl p-8 flex flex-col items-center justify-center gap-2 cursor-pointer bg-card hover:bg-secondary/50 transition-colors;
+  }
+  .voice-selector-option {
+    @apply p-4 rounded-lg border border-input bg-card cursor-pointer hover:border-primary transition-colors;
+  }
+  .voice-selector-option-selected {
+    @apply border-primary bg-secondary/50 ring-1 ring-primary;
+  }
+  .form-btn {
+    @apply w-full p-4 rounded-lg bg-[#663820] text-white font-serif text-lg font-medium hover:bg-[#522d1a] transition-colors;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
