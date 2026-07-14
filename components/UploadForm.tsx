@@ -52,18 +52,25 @@ function UploadForm() {
     },
   })
 
-  const [isLoading, setIsLoading] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
 
   const onSubmit = async (values: z.infer<typeof BookUploadSchema>) => {
-    setIsLoading(true)
+    setIsSubmitting(true)
     console.log(values)
     // Simulate submission
     await new Promise(resolve => setTimeout(resolve, 2000))
-    setIsLoading(false)
+    setIsSubmitting(false)
   }
 
   return (
     <div className="new-book-wrapper">
+      {isSubmitting &&
+        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center z-50">
+          Loading...
+        </div>
+      }
+
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
@@ -207,12 +214,11 @@ function UploadForm() {
             )}
           />
 
-          <button type="submit" className="form-btn" disabled={isLoading}>
-            {isLoading ? 'Synthesizing...' : 'Begin Synthesis'}
+          <button type="submit" className="form-btn" disabled={isSubmitting}>
+            {isSubmitting ? 'Synthesizing...' : 'Begin Synthesis'}
           </button>
         </form>
       </Form>
-      {isLoading && <div className="fixed inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center z-50">Loading...</div>}
     </div>
   )
 }
