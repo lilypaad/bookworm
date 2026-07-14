@@ -1,13 +1,15 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Upload, X, Image as ImageIcon } from 'lucide-react'
-import {BookUploadSchema} from "@/lib/zod";
+
+import { BookUploadSchema } from "@/lib/zod";
+import { DEFAULT_VOICE } from "@/lib/constants";
 
 const voicesMale = [
   {
@@ -41,19 +43,23 @@ const voicesFemale = [
 ] as const
 
 function UploadForm() {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
   const form = useForm<z.infer<typeof BookUploadSchema>>({
     resolver: zodResolver(BookUploadSchema),
     defaultValues: {
       title: '',
       author: '',
-      voice: '',
+      voice: DEFAULT_VOICE,
       pdfFile: undefined,
       coverImage: undefined,
     },
   })
-
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isMounted, setIsMounted] = useState(false)
 
   const onSubmit = async (values: z.infer<typeof BookUploadSchema>) => {
     setIsSubmitting(true)
