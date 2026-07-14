@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input'
 import { Upload, X, Image as ImageIcon } from 'lucide-react'
 
 import { BookUploadSchema } from "@/lib/zod";
-import { DEFAULT_VOICE } from "@/lib/constants";
+import {ACCEPTED_IMAGE_TYPES, ACCEPTED_PDF_TYPES, DEFAULT_VOICE} from "@/lib/constants";
 
 const voicesMale = [
   {
@@ -98,7 +98,7 @@ function UploadForm() {
                       <input
                         type="file"
                         className="hidden"
-                        accept=".pdf"
+                        accept={ACCEPTED_PDF_TYPES.join(',')}
                         onChange={(e) => onChange(e.target.files?.[0])}
                         {...field}
                       />
@@ -132,7 +132,7 @@ function UploadForm() {
                       <input
                         type="file"
                         className="hidden"
-                        accept="image/*"
+                        accept={ACCEPTED_IMAGE_TYPES.join(',')}
                         onChange={(e) => onChange(e.target.files?.[0])}
                         {...field}
                       />
