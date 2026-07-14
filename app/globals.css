@@ -143,7 +143,7 @@
     @apply border-primary bg-secondary/50 ring-1 ring-primary;
   }
   .form-btn {
-    @apply w-full p-4 rounded-lg bg-[#663820] text-white font-serif text-lg font-medium hover:bg-[#522d1a] transition-colors;
+    @apply w-full p-4 rounded-lg bg-[#663820] text-white font-serif text-lg font-bold hover:bg-[#522d1a] transition-colors;
   }
 }
 
