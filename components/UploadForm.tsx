@@ -9,6 +9,37 @@ import { Input } from '@/components/ui/input'
 import { Upload, X, Image as ImageIcon } from 'lucide-react'
 import {BookUploadSchema} from "@/lib/zod";
 
+const voicesMale = [
+  {
+    id: 'dave',
+    name: 'Dave',
+    description: 'Young male, British-Essex, casual & conversational',
+  },
+  {
+    id: 'daniel',
+    name: 'Daniel',
+    description: 'Middle-aged male, British, authoritative but warm',
+  },
+  {
+    id: 'chris',
+    name: 'Chris',
+    description: 'Male, casual & easy-going',
+  },
+] as const
+
+const voicesFemale = [
+  {
+    id: 'rachel',
+    name: 'Rachel',
+    description: 'Young female, American, calm & clear',
+  },
+  {
+    id: 'sarah',
+    name: 'Sarah',
+    description: 'Young female, American, soft & approachable',
+  },
+] as const
+
 function UploadForm() {
   const form = useForm<z.infer<typeof BookUploadSchema>>({
     resolver: zodResolver(BookUploadSchema),
@@ -141,15 +172,15 @@ function UploadForm() {
                   <div className="space-y-2">
                     <p className="text-sm font-semibold text-muted-foreground">Male Voices</p>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      {['Dave', 'Daniel', 'Chris'].map((voice) => (
+                      {voicesMale.map((voice) => (
                         <div
-                          key={voice}
-                          className={`voice-selector-option ${field.value === voice ? 'voice-selector-option-selected' : ''}`}
-                          onClick={() => field.onChange(voice)}
+                          key={voice.id}
+                          className={`voice-selector-option ${field.value === voice.id ? 'voice-selector-option-selected' : ''}`}
+                          onClick={() => field.onChange(voice.id)}
                         >
-                          <input type="radio" className="hidden" checked={field.value === voice} readOnly />
-                          <span className="font-semibold">{voice}</span>
-                          <p className="text-xs text-muted-foreground">Description for {voice}</p>
+                          <input type="radio" className="hidden" checked={field.value === voice.id} readOnly />
+                          <span className="font-semibold">{voice.name}</span>
+                          <p className="text-xs text-muted-foreground">{voice.description}</p>
                         </div>
                       ))}
                     </div>
@@ -157,15 +188,15 @@ function UploadForm() {
                   <div className="space-y-2">
                     <p className="text-sm font-semibold text-muted-foreground">Female Voices</p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {['Rachel', 'Sarah'].map((voice) => (
+                      {voicesFemale.map((voice) => (
                         <div
-                          key={voice}
-                          className={`voice-selector-option ${field.value === voice ? 'voice-selector-option-selected' : ''}`}
-                          onClick={() => field.onChange(voice)}
+                          key={voice.id}
+                          className={`voice-selector-option ${field.value === voice.id ? 'voice-selector-option-selected' : ''}`}
+                          onClick={() => field.onChange(voice.id)}
                         >
-                          <input type="radio" className="hidden" checked={field.value === voice} readOnly />
-                          <span className="font-semibold">{voice}</span>
-                          <p className="text-xs text-muted-foreground">Description for {voice}</p>
+                          <input type="radio" className="hidden" checked={field.value === voice.id} readOnly />
+                          <span className="font-semibold">{voice.name}</span>
+                          <p className="text-xs text-muted-foreground">{voice.description}</p>
                         </div>
                       ))}
                     </div>
