@@ -182,7 +182,7 @@ function UploadForm() {
               <FormItem>
                 <FormLabel className="form-label">Choose Assistant Voice</FormLabel>
                 <div className="grid gap-4">
-                  <div className="space-y-2">
+                  <div className="space-y-2 pl-1 pr-1">
                     <p className="text-sm font-semibold text-muted-foreground">Male Voices</p>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       {voicesMale.map((voice) => (
@@ -198,7 +198,7 @@ function UploadForm() {
                       ))}
                     </div>
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-2 pl-1 pr-1">
                     <p className="text-sm font-semibold text-muted-foreground">Female Voices</p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {voicesFemale.map((voice) => (
