@@ -49,11 +49,11 @@ function VapiControls({ book }: { book: IBook }) {
           <div className="flex flex-wrap gap-2 mt-auto">
             <div className="vapi-status-indicator">
               <span className="vapi-status-dot" />
-              <span className="vapi-status-text">Ready</span>
+              <span className="vapi-status-text">{status}</span>
             </div>
 
             <div className="vapi-status-indicator">
-              <span className="vapi-status-text">Voice: {book.persona}</span>
+              <span className="vapi-status-text">Voice: {book.voice}</span>
             </div>
 
             <div className="vapi-status-indicator">
