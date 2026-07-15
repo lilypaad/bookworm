@@ -75,3 +75,8 @@ export interface BookCardProps {
   coverURL: string;
   slug: string;
 }
+
+export interface Messages {
+  role: string;
+  content: string;
+}
