@@ -97,9 +97,15 @@ export async function saveBookSegments(bookId: string, clerkId: string, segments
   }
   catch(e) {
     console.error('Error saving book segments', e)
-    await BookSegment.deleteMany({ bookId })
-    await Book.findByIdAndDelete(bookId)
-    console.log('Deleted book segments and book due to failure saving segments.')
+
+    try {
+      await BookSegment.deleteMany({ bookId })
+      await Book.findByIdAndDelete(bookId)
+      console.log('Deleted book segments and book due to failure saving segments.')
+    }
+    catch(e) {
+      console.error('Error rolling back book/segments after failed save.', e)
+    }
 
     return {
       success: false,
