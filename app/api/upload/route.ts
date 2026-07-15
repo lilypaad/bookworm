@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { handleUpload, HandleUploadBody } from "@vercel/blob/client";
 import { auth } from "@clerk/nextjs/server";
 
-import {ACCEPTED_IMAGE_TYPES, ACCEPTED_PDF_TYPES, MAX_FILE_SIZE} from "@/lib/constants";
+import {ACCEPTED_IMAGE_TYPES, ACCEPTED_PDF_TYPES, MAX_FILE_SIZE, MAX_IMAGE_SIZE} from "@/lib/constants";
 
 export async function POST(request: Request): Promise<NextResponse> {
   const body = (await request.json()) as HandleUploadBody
@@ -11,15 +11,34 @@ export async function POST(request: Request): Promise<NextResponse> {
     const jsonResponse = await handleUpload({
       body,
       request,
-      onBeforeGenerateToken: async () => {
+      onBeforeGenerateToken: async (pathname, clientPayload) => {
         const { userId } = await auth()
 
         if(!userId) throw new Error('Unauthorized: User not authenticated')
 
+        // Set maximum file size depending on file type (10MB for images, 50MB for PDFs)
+        let allowedContentTypes = [...ACCEPTED_PDF_TYPES, ...ACCEPTED_IMAGE_TYPES]
+        let maximumSizeInBytes = MAX_IMAGE_SIZE // Default to image limit for safety
+
+        if (clientPayload) {
+          try {
+            const { contentType } = JSON.parse(clientPayload)
+            if (ACCEPTED_IMAGE_TYPES.includes(contentType)) {
+              allowedContentTypes = ACCEPTED_IMAGE_TYPES
+              maximumSizeInBytes = MAX_IMAGE_SIZE
+            } else if (ACCEPTED_PDF_TYPES.includes(contentType)) {
+              allowedContentTypes = ACCEPTED_PDF_TYPES
+              maximumSizeInBytes = MAX_FILE_SIZE
+            }
+          } catch (e) {
+            console.error('Failed to parse clientPayload:', e)
+          }
+        }
+
         return {
-          allowedContentTypes: [...ACCEPTED_PDF_TYPES, ...ACCEPTED_IMAGE_TYPES],
+          allowedContentTypes,
           addRandomSuffix: true,
-          maximumSizeInBytes: MAX_FILE_SIZE,
+          maximumSizeInBytes,
           tokenPayload: JSON.stringify({ userId })
         }
       },

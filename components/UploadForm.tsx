@@ -102,7 +102,8 @@ function UploadForm() {
       const uploadedPdfBlob = await upload(fileTitle, values.pdfFile, {
         access: 'public',
         handleUploadUrl: '/api/upload',
-        contentType: 'application/pdf'
+        contentType: 'application/pdf',
+        clientPayload: JSON.stringify({ contentType: 'application/pdf' })
       })
 
       // Upload user-specified cover image OR cover extracted from PDF to blob storage
@@ -111,7 +112,8 @@ function UploadForm() {
         const uploadedCoverBlob = await upload(fileTitle, values.coverImage, {
           access: 'public',
           handleUploadUrl: '/api/upload',
-          contentType: values.coverImage.type
+          contentType: values.coverImage.type,
+          clientPayload: JSON.stringify({ contentType: values.coverImage.type })
         })
         coverUrl = uploadedCoverBlob.url
       }
@@ -122,7 +124,8 @@ function UploadForm() {
         const uploadedCoverBlob = await upload(`${fileTitle}_cover.png`, blob, {
           access: 'public',
           handleUploadUrl: '/api/upload',
-          contentType: 'image/png'
+          contentType: 'image/png',
+          clientPayload: JSON.stringify({ contentType: 'image/png' })
         })
         coverUrl = uploadedCoverBlob.url
       }
