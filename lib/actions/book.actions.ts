@@ -20,6 +20,11 @@ export async function checkBookExists(title: string) {
         data: serialiseData(existingBook)
       }
     }
+    else {
+      return {
+        exists: false
+      }
+    }
   }
   catch(e) {
     console.error('Error checking book exists', e)
