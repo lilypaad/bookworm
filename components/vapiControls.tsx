@@ -7,6 +7,7 @@ import {ArrowLeft, Mic, MicOff} from "lucide-react";
 
 import useVapi from "@/hooks/useVapi";
 import {IBook} from "@/types";
+import Transcript from "@/components/Transcript";
 
 function VapiControls({ book }: { book: IBook }) {
   const { status, isActive, messages, currentMessage, currentUserMessage, duration, limitError, start, stop, clearErrors } = useVapi(book)
@@ -57,12 +58,12 @@ function VapiControls({ book }: { book: IBook }) {
 
       {/* Transcript area */}
       <section className="transcript-container">
-        <div className="transcript-empty">
-          <Mic className="w-12 h-12 text-[#212a3b]/20" />
-          <h2 className="transcript-empty-text">No conversation yet</h2>
-          <p className="transcript-empty-hint">
-            Click the mic button above to start talking
-          </p>
+        <div className="vapi-transcript-wrapper">
+          <Transcript
+            messages={messages}
+            currentMessage={currentMessage}
+            currentUserMessage={currentUserMessage}
+          />
         </div>
       </section>
     </div>
