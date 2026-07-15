@@ -162,6 +162,8 @@ function UploadForm() {
       // Save book segments to MongoDB
       const segments = await saveBookSegments(book.data._id, userId, parsedPDF.content)
       if(!segments.success) {
+        await deleteBlob(uploadedPdfBlob.url)
+        await deleteBlob(coverUrl)
         throw new Error('Failed to save book segments')
       }
 
