@@ -4,6 +4,7 @@ import React, {useEffect, useState} from 'react'
 import { useForm } from 'react-hook-form'
 import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
+import { del } from "@vercel/blob";
 import { upload } from "@vercel/blob/client";
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
@@ -138,10 +139,18 @@ function UploadForm() {
         fileSize: values.pdfFile.size,
       })
       if(!book.success) {
+        // Delete PDF and cover blobs for failed submission
+        await del(uploadedPdfBlob.url)
+        await del(coverUrl)
+
         toast.error('Failed to create book')
         throw new Error('Failed to create book')
       }
       if(book.alreadyExists) {
+        // Delete duplicate PDF and cover blobs
+        await del(uploadedPdfBlob.url)
+        await del(coverUrl)
+
         toast.info(`Book "${existsCheck.data.title}" already exists.`)
         form.reset()
         router.push(`/books/${existsCheck.data.slug}`)
