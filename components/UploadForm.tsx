@@ -4,7 +4,6 @@ import React, {useEffect, useState} from 'react'
 import { useForm } from 'react-hook-form'
 import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
-import { del } from "@vercel/blob";
 import { upload } from "@vercel/blob/client";
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
@@ -16,6 +15,7 @@ import { BookUploadSchema } from "@/lib/zod";
 import { BookUploadFormValues } from "@/types";
 import { ACCEPTED_IMAGE_TYPES, ACCEPTED_PDF_TYPES, DEFAULT_VOICE } from "@/lib/constants";
 import { checkBookExists, createBook, saveBookSegments } from "@/lib/actions/book.actions";
+import { deleteBlob } from "@/lib/actions/blob.actions";
 import { parsePDFFile } from "@/lib/utils";
 
 const voicesMale = [
@@ -140,15 +140,15 @@ function UploadForm() {
       })
       if(!book.success) {
         // Delete PDF and cover blobs for failed submission
-        await del(uploadedPdfBlob.url)
-        await del(coverUrl)
+        await deleteBlob(uploadedPdfBlob.url)
+        await deleteBlob(coverUrl)
 
         throw new Error('Failed to create book')
       }
       if(book.alreadyExists) {
         // Delete duplicate PDF and cover blobs
-        await del(uploadedPdfBlob.url)
-        await del(coverUrl)
+        await deleteBlob(uploadedPdfBlob.url)
+        await deleteBlob(coverUrl)
 
         toast.info(`Book "${book.data.title}" already exists.`)
         form.reset()
