@@ -4,7 +4,12 @@ const nextConfig: NextConfig = {
   /* config options here */
   images: { remotePatterns: [
     { protocol: 'https', hostname: 'covers.openlibrary.org' }
-  ]}
+  ]},
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '50mb'
+    }
+  }
 };
 
 export default nextConfig;
