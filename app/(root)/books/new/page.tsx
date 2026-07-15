@@ -10,7 +10,7 @@ function Page() {
             Add a New Book
           </h1>
           <p className="text-md text-foreground font-serif">
-            Upload a PDF to generate your interactive interview
+            Upload a PDF to generate your interactive reading experience
           </p>
         </section>
 
