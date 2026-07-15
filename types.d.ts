@@ -9,7 +9,7 @@ export interface IBook extends Document {
   clerkId: string;
   title: string;
   author: string;
-  persona?: string;
+  voice?: string;
   slug: string;
   fileURL: string;
   fileBlobKey: string;
