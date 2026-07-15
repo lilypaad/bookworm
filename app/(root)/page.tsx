@@ -13,7 +13,7 @@ const Page = async () => {
       <HeroSection />
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-3 md:gap-x-10 gap-y-7 md:gap-y-9">
-        {books.map((book) => (
+        {books && books.map((book) => (
           <BookCard key={book._id} title={book.title} author={book.author} coverURL={book.coverURL} slug={book.slug} />
         ))}
       </div>
