@@ -18,8 +18,8 @@ function useLatestRef<T>(value: T) {
 }
 
 const TIMER_INTERVAL_MS = 1000;
-const SECONDS_PER_MINUTE = 60;
-const TIME_WARNING_THRESHOLD = 60; // Show warning when this many seconds remain
+// const SECONDS_PER_MINUTE = 60;
+// const TIME_WARNING_THRESHOLD = 60; // Show warning when this many seconds remain
 
 let vapi: InstanceType<typeof Vapi>
 function getVapi() {
@@ -50,7 +50,6 @@ function useVapi(book: IBook) {
   const sessionIdRef = useRef<string | null>(null)
   const isStoppingRef = useRef<boolean>(false)
 
-  const bookRef = useLatestRef(book)
   const durationRef = useLatestRef(duration)
   const voice = book.voice || DEFAULT_VOICE
 

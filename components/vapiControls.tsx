@@ -1,9 +1,8 @@
 'use client'
 
 import React from 'react'
-import Link from "next/link";
 import Image from "next/image";
-import {ArrowLeft, Mic, MicOff} from "lucide-react";
+import {Mic, MicOff} from "lucide-react";
 
 import useVapi from "@/hooks/useVapi";
 import {IBook} from "@/types";
@@ -22,10 +21,10 @@ function VapiControls({ book }: { book: IBook }) {
             alt={book.title}
             width={120}
             height={180}
-            className="rounded-lg shadow-md object-cover w-[120px] aspect-[2/3]"
+            className="rounded-lg shadow-md object-cover w-30 aspect-2/3"
           />
           {(status === 'speaking' || status === 'thinking') && (
-            <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 w-[60px] h-[60px] bg-white rounded-full animate-ping pointer-events-none" />
+            <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 w-15 h-15 bg-white rounded-full animate-ping pointer-events-none" />
           )}
           <button className="vapi-mic-btn" onClick={isActive ? stop : start} disabled={status === 'connecting'}>
             {isActive ? (
