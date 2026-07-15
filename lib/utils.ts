@@ -12,7 +12,7 @@ export function generateSlug(text: string): string {
     .replace(/\.[^/.]+$/, '') // remove file extensions
     .toLowerCase()
     .trim()
-    .replace(/[^\ws-]/g, '') // remove special characters
+    .replace(/[^\w\s-]/g, '') // remove special characters
     .replace(/[\s_]+/g, '-') // replaces spaces/underscores with hyphens
     .replace(/^-+|-+$/g, '') // remove leading/trailing hyphens
 }
