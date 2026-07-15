@@ -159,3 +159,25 @@ export async function getBookBySlug(slug: string) {
     return { success: false, error: e }
   }
 }
+
+export async function searchBookSegments(bookId: string, query: string, limit: number = 3) {
+  try {
+    await connectToDatabase()
+
+    const segments = await BookSegment.find(
+      { bookId, $text: { $search: query } },
+      { score: { $meta: "textScore" } }
+    )
+      .sort({ score: { $meta: "textScore" } })
+      .limit(limit)
+      .lean()
+
+    return {
+      success: true,
+      data: serialiseData(segments)
+    }
+  } catch (e) {
+    console.error('Error searching book segments', e)
+    return { success: false, error: e }
+  }
+}
