@@ -5,7 +5,7 @@ import BookCard from "@/components/bookCard";
 
 const Page = () => {
   return (
-    <main className="container mx-auto">
+    <main className="container mx-auto flex flex-col">
       <HeroSection />
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-3 md:gap-x-10 gap-y-7 md:gap-y-9">

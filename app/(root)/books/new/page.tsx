@@ -3,8 +3,8 @@ import UploadForm from "@/components/UploadForm";
 
 function Page() {
   return (
-    <main className="container mx-auto">
-      <div className="pt-16 grid gap-8">
+    <main className="container mx-auto flex flex-col">
+      <div className="mt-26 grid gap-8">
         <section className="flex flex-col gap-5 text-center items-center">
           <h1 className="text-4xl md:text-5xl font-serif font-bold text-foreground tracking-[-0.02em]">
             Add a New Book
