@@ -24,8 +24,15 @@ function VapiControls({ book }: { book: IBook }) {
             height={180}
             className="rounded-lg shadow-md object-cover w-[120px] aspect-[2/3]"
           />
-          <button className="vapi-mic-btn">
-            <MicOff className="w-7 h-7 text-[#212a3b]" />
+          {(status === 'speaking' || status === 'thinking') && (
+            <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 w-[60px] h-[60px] bg-white rounded-full animate-ping pointer-events-none" />
+          )}
+          <button className="vapi-mic-btn" onClick={isActive ? stop : start} disabled={status === 'connecting'}>
+            {isActive ? (
+              <Mic className="w-7 h-7 text-foreground" />
+            ) : (
+              <MicOff className="w-7 h-7 text-foreground" />
+            )}
           </button>
         </div>
 
