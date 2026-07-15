@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { BookOpen, Globe, Plus } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Image from "next/image";
 
@@ -51,7 +51,7 @@ const HeroSection = () => {
                 "Start chatting"
               ].map((step, i) => (
                 <li key={i} className="flex gap-3 items-start">
-                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-amber-100 text-secondary-foreground flex items-center justify-center text-xs font-bold">
+                  <span className="shrink-0 w-8 h-8 rounded-full bg-amber-100 text-secondary-foreground flex items-center justify-center text-xs font-bold">
                     {i + 1}
                   </span>
                   <span className="text-md text-secondary-foreground font-serif">{step}</span>
