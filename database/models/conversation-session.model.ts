@@ -11,7 +11,7 @@ const ConversationSessionSchema = new Schema<IConversationSession>({
   billingPeriodStart: { type: Date, required: true, index: true },
 }, { timestamps: true })
 
-ConversationSessionSchema.index({ bookId: 1, billingPeriodStart: 1 }, { unique: true })
+ConversationSessionSchema.index({ bookId: 1, billingPeriodStart: 1 })
 
 const ConversationSession = models.ConversationSession || model<IConversationSession>('ConversationSession', ConversationSessionSchema)
 
