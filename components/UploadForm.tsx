@@ -90,21 +90,22 @@ function UploadForm() {
 
       const fileTitle = values.title.replace(/\s+/g, '-').toLowerCase()
 
+      // Extract PDF file
       const parsedPDF = await parsePDFFile(values.pdfFile)
-
       if(parsedPDF.content.length === 0) {
         toast.error('Failed to parse PDF. Please try again with a different file.')
         return
       }
 
+      // Upload PDF file to blob storage
       const uploadedPdfBlob = await upload(fileTitle, values.pdfFile, {
         access: 'public',
         handleUploadUrl: '/api/upload',
         contentType: 'application/pdf'
       })
 
+      // Upload user-specified cover image OR cover extracted from PDF to blob storage
       let coverUrl: string
-
       if(values.coverImage && values.coverImage.size > 0) {
         const uploadedCoverBlob = await upload(fileTitle, values.coverImage, {
           access: 'public',
@@ -125,6 +126,7 @@ function UploadForm() {
         coverUrl = uploadedCoverBlob.url
       }
 
+      // Save book entry to MongoDB
       const book = await createBook({
         clerkId: userId,
         title: values.title,
@@ -135,12 +137,10 @@ function UploadForm() {
         coverURL: coverUrl,
         fileSize: values.pdfFile.size,
       })
-
       if(!book.success) {
         toast.error('Failed to create book')
         throw new Error('Failed to create book')
       }
-
       if(book.alreadyExists) {
         toast.info(`Book "${existsCheck.data.title}" already exists.`)
         form.reset()
@@ -148,8 +148,8 @@ function UploadForm() {
         return
       }
 
+      // Save book segments to MongoDB
       const segments = await saveBookSegments(book.data._id, userId, parsedPDF.content)
-
       if(!segments.success) {
         toast.error('Failed to save book segments')
         throw new Error('Failed to save book segments')
