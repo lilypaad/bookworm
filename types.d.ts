@@ -1,5 +1,7 @@
 import { Document, Types } from 'mongoose'
 
+import { BookUploadSchema } from "@/lib/zod";
+
 // DATABASE MODELS
 
 export interface IBook extends Document {
@@ -44,6 +46,27 @@ export interface IVoiceSession extends Document {
 }
 
 // FORM & INPUT TYPES
+
+export type BookUploadFormValues = z.infer<typeof BookUploadSchema>;
+
+export interface CreateBook {
+  clerkId: string;
+  title: string;
+  author: string;
+  persona?: string;
+  fileURL: string;
+  fileBlobKey: string;
+  coverURL?: string;
+  coverBlobKey?: string;
+  fileSize: number;
+}
+
+export interface TextSegment {
+  text: string;
+  segmentIndex: number;
+  pageNumber?: number;
+  wordCount: number;
+}
 
 export interface BookCardProps {
   title: string;
