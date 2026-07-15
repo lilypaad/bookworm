@@ -1,8 +1,15 @@
 import { NextResponse } from 'next/server';
+
 import { searchBookSegments } from '@/lib/actions/book.actions';
+import {VAPI_CREDENTIAL} from "@/lib/constants";
 
 export async function POST(request: Request): Promise<NextResponse> {
   try {
+    const authHeader = request.headers.get('Authorization')
+    if(authHeader != VAPI_CREDENTIAL) {
+      throw new Error('Unauthorized')
+    }
+
     const body = await request.json();
     
     // Vapi sends tool calls in message.toolCalls or message.toolCallList
@@ -68,8 +75,10 @@ export async function POST(request: Request): Promise<NextResponse> {
     return NextResponse.json({
       results: results.filter((r) => r !== null),
     });
-  } catch (error) {
-    console.error('Error handling Vapi tool call:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+  } catch (e) {
+    console.error('Error handling Vapi tool call:', e);
+    const message = e instanceof Error ? e.message : 'Unknown error occurred'
+    const status = message.includes('Unauthorized') ? 401 : 500
+    return NextResponse.json({ error: message }, { status })
   }
 }
