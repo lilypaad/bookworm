@@ -51,7 +51,7 @@ const voicesFemale = [
 function UploadForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
-  const { userId } = useAuth()
+  const { userId, isLoaded } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
@@ -70,7 +70,7 @@ function UploadForm() {
   })
 
   const onSubmit = async (values: BookUploadFormValues) => {
-    if(!userId) {
+    if(!isLoaded || !userId) {
       return toast.error('You must be logged in to upload a book')
     }
 
