@@ -172,12 +172,6 @@ function UploadForm() {
     finally {
       setIsSubmitting(false)
     }
-
-    console.log(values)
-    // Simulate submission
-    await new Promise(resolve => setTimeout(resolve, 2000))
-
-    setIsSubmitting(false)
   }
 
   return (
