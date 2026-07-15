@@ -87,14 +87,9 @@ export async function parsePDFFile(file: File) {
     const canvas = document.createElement('canvas');
     canvas.width = viewport.width;
     canvas.height = viewport.height;
-    const context = canvas.getContext('2d');
-
-    if (!context) {
-      throw new Error('Could not get canvas context');
-    }
 
     await firstPage.render({
-      canvasContext: context,
+      canvas: canvas,
       viewport: viewport,
     }).promise;
 
