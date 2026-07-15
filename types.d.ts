@@ -1,9 +1,9 @@
-import { Document } from 'mongoose'
+import { Document, Types } from 'mongoose'
 
 // DATABASE MODELS
 
 export interface IBook extends Document {
-  _id: stirng;
+  _id: string;
   clerkId: string;
   title: string;
   author: string;
@@ -20,6 +20,7 @@ export interface IBook extends Document {
 }
 
 export interface IBookSegment extends Document {
+  _id: string;
   clerkId: string;
   bookId: Types.ObjectId;
   content: string;
