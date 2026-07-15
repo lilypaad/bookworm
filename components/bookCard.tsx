@@ -7,16 +7,16 @@ import Image from "next/image";
 const BookCard = ({ title, author, coverURL, slug }: BookCardProps) => {
   return (
     <Link href={`/books/${slug}`}>
-      <article className="">
-        <figure className="flex justify-center bg-white">
-          <div>
-            <Image src={coverURL} alt={title} width={133} height={200} className="h-52 w-auto" />
+      <article className="bg-white rounded-xl">
+        <figure className="flex flex-col gap-2">
+          <div className="w-full">
+            <Image src={coverURL} alt={title} width={133} height={200} className="h-48 w-auto mx-auto" />
           </div>
+          <figcaption className="h-24">
+            <h3 className="font-serif font-bold text-xl text-center">{title}</h3>
+            <p className="font-serif text-sm text-center">{author}</p>
+          </figcaption>
         </figure>
-        <figcaption className="h-24 pt-2">
-          <h3 className="font-serif font-bold text-xl">{title}</h3>
-          <p className="font-serif text-md">{author}</p>
-        </figcaption>
       </article>
     </Link>
   )
