@@ -34,7 +34,7 @@ export interface IBookSegment extends Document {
   updatedAt: Date;
 }
 
-export interface IVoiceSession extends Document {
+export interface IConversationSession extends Document {
   _id: string;
   clerkId: string;
   bookId: Types.ObjectId;
@@ -79,4 +79,16 @@ export interface BookCardProps {
 export interface Messages {
   role: string;
   content: string;
+}
+
+export interface StartSessionResult {
+  success: boolean;
+  sessionId?: string;
+  maxDurationMinutes?: number;
+  error?: string;
+}
+
+export interface EndSessionResult {
+  success: boolean;
+  error?: string;
 }
