@@ -145,6 +145,39 @@
   .form-btn {
     @apply w-full p-4 rounded-lg bg-[#663820] text-white font-serif text-lg font-bold hover:bg-[#522d1a] transition-colors;
   }
+  .book-page-container {
+    @apply max-w-4xl mx-auto py-12 px-4 space-y-8;
+  }
+  .vapi-header-card {
+    @apply bg-secondary rounded-xl p-8 flex items-start gap-8 relative;
+  }
+  .vapi-mic-btn {
+    @apply absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 w-[60px] h-[60px] bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors;
+  }
+  .vapi-status-indicator {
+    @apply flex items-center gap-2 bg-card px-3 py-2 rounded-sm text-xs font-medium font-sans;
+  }
+  .vapi-status-dot {
+    @apply w-2 h-2 rounded-full bg-gray-400;
+  }
+  .vapi-status-text {
+    @apply text-muted-foreground;
+  }
+  .transcript-container {
+    @apply bg-card rounded-xl min-h-100 p-12 flex flex-col items-center justify-center border border-border;
+  }
+  .transcript-empty {
+    @apply flex flex-col items-center gap-4 text-center;
+  }
+  .transcript-empty-text {
+    @apply text-xl font-bold text-foreground;
+  }
+  .transcript-empty-hint {
+    @apply text-muted-foreground;
+  }
+  .back-btn-floating {
+    @apply fixed top-24 left-6 w-12 h-12 bg-card rounded-full border border-border shadow-md flex items-center justify-center hover:bg-gray-50 transition-colors z-50;
+  }
 }
 
 @layer base {
