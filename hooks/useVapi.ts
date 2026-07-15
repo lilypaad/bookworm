@@ -1,8 +1,10 @@
 import {useEffect, useRef, useState} from "react";
 import {useAuth} from "@clerk/nextjs";
+import Vapi from '@vapi-ai/web'
 
 import {IBook, Messages} from "@/types";
-import {DEFAULT_VOICE} from "@/lib/constants";
+import {ASSISTANT_ID, DEFAULT_VOICE, VAPI_API_KEY, VOICE_SETTINGS} from "@/lib/constants";
+import {startConversationSession} from "@/lib/actions/session.actions";
 
 export type CallStatus = 'idle' | 'connecting' | 'starting' | 'listening' | 'thinking' | 'speaking'
 
@@ -12,6 +14,21 @@ function useLatestRef<T>(value: T) {
     ref.current = value
   }, [value])
   return ref
+}
+
+
+let vapi: InstanceType<typeof Vapi>
+
+function getVapi() {
+  if(!vapi) {
+    if(!VAPI_API_KEY) {
+      throw new Error('NEXT_PUBLIC_VAPI_API_KEY not found. Please set it in the .env file.')
+    }
+
+    vapi = new Vapi(VAPI_API_KEY)
+  }
+
+  return vapi
 }
 
 function useVapi(book: IBook) {
@@ -41,8 +58,54 @@ function useVapi(book: IBook) {
   // const remainingSeconds
   // const showTimeWarning
 
-  const start = async () => {}
-  const stop = async () => {}
+  const start = async () => {
+    if(!userId) return setLimitError('Please login to start a conversation')
+
+    setLimitError(null)
+    setStatus('connecting')
+
+    try {
+      const result = await startConversationSession(userId, book._id)
+
+      if(!result.success) {
+        setLimitError(result.error || 'Session limit reached. Please upgrade your plan.')
+        setStatus('idle')
+        return
+      }
+
+      sessionIdRef.current = result.sessionId | null
+
+      const firstMessage = `Hey! I'm your AI reading assistant. A quick question before we dive in, have you 
+        read ${book.title} yet? Or are we starting fresh?`
+
+      await getVapi().start(ASSISTANT_ID, {
+        firstMessage,
+        variableValues: {
+          title: book.title, author: book.author, bookId: book._id
+        },
+        // voice: {
+        //   provider: '11labs' as const,
+        //   voiceId: getVoice(voice).id,
+        //   model: 'eleven_turbo_v2' as const,
+        //   stability: VOICE_SETTINGS.stability,
+        //   similarityBoost: VOICE_SETTINGS.similarityBoost,
+        //   style: VOICE_SETTINGS.style,
+        //   useSpeakerBoost: VOICE_SETTINGS.useSpeakerBoost,
+        // }
+      })
+    }
+    catch(e) {
+      console.error('Error starting conversation')
+      setStatus('idle')
+      setLimitError('An error occurred while starting the conversation')
+    }
+  }
+
+  const stop = async () => {
+    isStoppingRef.current = true
+    await getVapi().stop()
+  }
+
   const clearErrors = async () => {}
 
   return {
