@@ -143,7 +143,6 @@ function UploadForm() {
         await del(uploadedPdfBlob.url)
         await del(coverUrl)
 
-        toast.error('Failed to create book')
         throw new Error('Failed to create book')
       }
       if(book.alreadyExists) {
@@ -151,16 +150,15 @@ function UploadForm() {
         await del(uploadedPdfBlob.url)
         await del(coverUrl)
 
-        toast.info(`Book "${existsCheck.data.title}" already exists.`)
+        toast.info(`Book "${book.data.title}" already exists.`)
         form.reset()
-        router.push(`/books/${existsCheck.data.slug}`)
+        router.push(`/books/${book.data.slug}`)
         return
       }
 
       // Save book segments to MongoDB
       const segments = await saveBookSegments(book.data._id, userId, parsedPDF.content)
       if(!segments.success) {
-        toast.error('Failed to save book segments')
         throw new Error('Failed to save book segments')
       }
 
