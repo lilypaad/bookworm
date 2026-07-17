@@ -30,7 +30,7 @@ const BookDetailsPage = async ({ params }: Props) => {
     <main className="container mx-auto">
 
       {/* Back button */}
-      <Link href="/" className="back-btn-floating">
+      <Link href="/" className="back-btn-floating" aria-label="Go back to library">
         <ArrowLeft className="w-6 h-6 text-[#212a3b]" />
       </Link>
 

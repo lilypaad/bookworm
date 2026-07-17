@@ -241,8 +241,8 @@ function useVapi(book: IBook) {
 
       sessionIdRef.current = result.sessionId || null
 
-      const firstMessage = `Hey! I'm your AI reading assistant. A quick question before we dive in – have you actually 
-        read "${book.title}" yet? Or are we starting fresh?`
+      const firstMessage = `Hey there! I'm your AI reading assistant. A quick question before we dive in – have you 
+        actually read "${book.title}" before? Or are we starting fresh?`
 
       await getVapi().start(ASSISTANT_ID, {
         firstMessage,
@@ -261,6 +261,14 @@ function useVapi(book: IBook) {
       })
     }
     catch(e) {
+      const failedSessionId = sessionIdRef.current
+      sessionIdRef.current = null
+
+      if(failedSessionId) {
+        await endConversationSession(failedSessionId, durationRef.current)
+          .catch((error) => console.error('Failed to close session after startup error: ', error))
+      }
+
       console.error('Error starting conversation')
       setStatus('idle')
       setLimitError('An error occurred while starting the conversation')

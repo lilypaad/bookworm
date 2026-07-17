@@ -152,7 +152,7 @@
     @apply bg-secondary rounded-xl p-8 flex items-start gap-8 relative;
   }
   .vapi-mic-btn {
-    @apply absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 w-15 h-15 bg-card rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors;
+    @apply absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 w-15 h-15 bg-secondary rounded-full shadow-lg flex items-center justify-center hover:bg-accent transition-colors;
   }
   .vapi-status-indicator {
     @apply flex items-center gap-2 bg-card px-3 py-2 rounded-sm text-xs font-medium font-sans;
@@ -162,6 +162,7 @@
   }
   .vapi-status-text {
     @apply text-muted-foreground;
+
     text-transform: capitalize;
   }
   .transcript-container {

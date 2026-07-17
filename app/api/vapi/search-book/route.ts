@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 import { searchBookSegments } from '@/lib/actions/book.actions';
-import {VAPI_CREDENTIAL} from "@/lib/constants";
+import { VAPI_CREDENTIAL } from "@/lib/constants";
 
 export async function POST(request: Request): Promise<NextResponse> {
   try {
@@ -59,7 +59,14 @@ export async function POST(request: Request): Promise<NextResponse> {
               toolCallId: toolCall.id,
               result: combinedContent,
             };
-          } else {
+          }
+          else if(!searchResult.success) {
+            return {
+              toolCallId: toolCall.id,
+              result: "an error occurred while searching book segments"
+            }
+          }
+          else {
             // If no matches are found, return "no information found about this topic"
             return {
               toolCallId: toolCall.id,

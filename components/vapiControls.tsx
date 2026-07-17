@@ -21,12 +21,18 @@ function VapiControls({ book }: { book: IBook }) {
             alt={book.title}
             width={120}
             height={180}
-            className="rounded-lg shadow-md object-cover w-30 aspect-2/3"
+            className="rounded-lg shadow-md object-cover md:w-30 w-24 aspect-2/3"
           />
           {(status === 'speaking' || status === 'thinking') && (
             <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 w-15 h-15 bg-white rounded-full animate-ping pointer-events-none" />
           )}
-          <button className="vapi-mic-btn" onClick={isActive ? stop : start} disabled={status === 'connecting'}>
+          <button
+            className="vapi-mic-btn"
+            type="button"
+            onClick={isActive ? stop : start}
+            disabled={status === 'connecting'}
+            aria-label={isActive ? 'Stop conversation' : 'Start conversation'}
+          >
             {isActive ? (
               <Mic className="w-7 h-7 text-foreground" />
             ) : (
@@ -37,7 +43,7 @@ function VapiControls({ book }: { book: IBook }) {
 
         <div className="flex flex-col gap-3 py-1">
           <div className="space-y-1">
-            <h1 className="text-3xl font-bold font-serif text-foreground">
+            <h1 className="md:text-3xl text-xl font-bold font-serif text-foreground">
               {book.title}
             </h1>
             <p className="font-sans text-muted-foreground text-lg">
