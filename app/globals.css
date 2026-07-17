@@ -162,7 +162,6 @@
   }
   .vapi-status-text {
     @apply text-muted-foreground;
-
     text-transform: capitalize;
   }
   .transcript-container {
