@@ -30,6 +30,12 @@ NEXT_PUBLIC_ASSISTANT_ID=xxxxxxxxxxxxxxxxxxxx
 VAPI_CREDENTIAL=xxxxxxxxxxxxxxxxxxxx
 ```
 
+Install the project's dependancies by running the following in the project's root:
+
+```bash
+npm install
+```
+
 Then, run the development server:
 
 ```bash
