@@ -145,6 +145,68 @@
   .form-btn {
     @apply w-full p-4 rounded-lg bg-[#663820] text-white font-serif text-lg font-bold hover:bg-[#522d1a] transition-colors;
   }
+  .book-page-container {
+    @apply max-w-4xl mx-auto py-12 px-4 space-y-8;
+  }
+  .vapi-header-card {
+    @apply bg-secondary rounded-xl p-8 flex items-start gap-8 relative;
+  }
+  .vapi-mic-btn {
+    @apply absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 w-15 h-15 bg-secondary rounded-full shadow-lg flex items-center justify-center hover:bg-accent transition-colors;
+  }
+  .vapi-status-indicator {
+    @apply flex items-center gap-2 bg-card px-3 py-2 rounded-sm text-xs font-medium font-sans;
+  }
+  .vapi-status-dot {
+    @apply w-2 h-2 rounded-full bg-gray-400;
+  }
+  .vapi-status-text {
+    @apply text-muted-foreground;
+
+    text-transform: capitalize;
+  }
+  .transcript-container {
+    @apply bg-card rounded-xl h-150 flex flex-col border border-border overflow-hidden relative;
+  }
+  .transcript-empty {
+    @apply flex flex-col items-center justify-center gap-4 text-center h-full w-full;
+  }
+  .transcript-empty-text {
+    @apply text-xl font-bold text-foreground;
+  }
+  .transcript-empty-hint {
+    @apply text-muted-foreground;
+  }
+  .transcript-messages {
+    @apply flex-1 flex flex-col gap-6 w-full overflow-y-auto p-12 scroll-smooth;
+  }
+  .transcript-message {
+    @apply flex w-full;
+  }
+  .transcript-message-user {
+    @apply justify-end;
+  }
+  .transcript-message-assistant {
+    @apply justify-start;
+  }
+  .transcript-bubble {
+    @apply p-4 rounded-2xl max-w-[80%] text-lg font-sans leading-relaxed shadow-sm;
+  }
+  .transcript-bubble-user {
+    @apply bg-[#663820] text-white rounded-br-none text-base;
+  }
+  .transcript-bubble-assistant {
+    @apply bg-[#f3e4c7] text-foreground rounded-bl-none text-base;
+  }
+  .transcript-cursor {
+    @apply inline-block w-2 h-5 bg-current ml-1 align-middle animate-pulse;
+  }
+  .vapi-transcript-wrapper {
+    @apply flex-1 min-h-0 w-full flex flex-col;
+  }
+  .back-btn-floating {
+    @apply fixed top-24 left-6 w-12 h-12 bg-card rounded-full border border-border shadow-md flex items-center justify-center hover:bg-gray-50 transition-colors z-50;
+  }
 }
 
 @layer base {

@@ -2,6 +2,7 @@ import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
 import { TextSegment } from '@/types';
+import {DEFAULT_VOICE, voiceOptions} from "@/lib/constants";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -124,3 +125,19 @@ export async function parsePDFFile(file: File) {
     throw new Error(`Failed to parse PDF file: ${error instanceof Error ? error.message : String(error)}`);
   }
 }
+
+// Get voice data by voice key or voice ID
+export const getVoice = (voice?: string) => {
+  if (!voice) return voiceOptions[DEFAULT_VOICE];
+
+  // Find by voice ID
+  const voiceEntry = Object.values(voiceOptions).find((v) => v.id === voice);
+  if (voiceEntry) return voiceEntry;
+
+  // Find by key
+  const voiceByKey = voiceOptions[voice as keyof typeof voiceOptions];
+  if (voiceByKey) return voiceByKey;
+
+  // Default fallback
+  return voiceOptions[DEFAULT_VOICE];
+};

@@ -5,6 +5,7 @@ import { generateSlug, serialiseData } from "@/lib/utils";
 import { CreateBook, TextSegment } from "@/types";
 import Book from "@/database/models/book.model";
 import BookSegment from "@/database/models/book-segment.model";
+import { DEFAULT_VOICE, voiceOptions } from "@/lib/constants";
 
 export async function checkBookExists(title: string) {
   try {
@@ -125,11 +126,58 @@ export async function getAllBooks() {
       data: serialiseData(books),
     }
   }
-  catch(e) {
+    catch(e) {
     console.error('Error connecting to database', e)
     return {
       success: false,
       error: e
     }
+  }
+}
+
+export async function getBookBySlug(slug: string) {
+  try {
+    await connectToDatabase()
+
+    const book = await Book.findOne({ slug }).lean()
+
+    if (!book) {
+      return { success: false }
+    }
+
+    const voiceInfo = voiceOptions[book.voice as keyof typeof voiceOptions] || voiceOptions[DEFAULT_VOICE];
+
+    return {
+      success: true,
+      data: {
+        ...serialiseData(book),
+        persona: voiceInfo.name
+      }
+    }
+  } catch (e) {
+    console.error('Error fetching book by slug', e)
+    return { success: false, error: e }
+  }
+}
+
+export async function searchBookSegments(bookId: string, query: string, limit: number = 3) {
+  try {
+    await connectToDatabase()
+
+    const segments = await BookSegment.find(
+      { bookId, $text: { $search: query } },
+      { score: { $meta: "textScore" } }
+    )
+      .sort({ score: { $meta: "textScore" } })
+      .limit(limit)
+      .lean()
+
+    return {
+      success: true,
+      data: serialiseData(segments)
+    }
+  } catch (e) {
+    console.error('Error searching book segments', e)
+    return { success: false, error: e }
   }
 }

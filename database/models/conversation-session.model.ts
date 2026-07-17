@@ -1,8 +1,8 @@
 import { model, models, Schema } from 'mongoose'
 
-import { IVoiceSession } from "@/types";
+import { IConversationSession } from "@/types";
 
-const VoiceSessionSchema = new Schema<IVoiceSession>({
+const ConversationSessionSchema = new Schema<IConversationSession>({
   clerkId: { type: String, required: true, index: true },
   bookId: { type: Schema.Types.ObjectId, ref: 'Book', required: true },
   startedAt: { type: Date, required: true, default: Date.now },
@@ -11,8 +11,8 @@ const VoiceSessionSchema = new Schema<IVoiceSession>({
   billingPeriodStart: { type: Date, required: true, index: true },
 }, { timestamps: true })
 
-VoiceSessionSchema.index({ bookId: 1, billingPeriodStart: 1 }, { unique: true })
+ConversationSessionSchema.index({ bookId: 1, billingPeriodStart: 1 })
 
-const VoiceSession = models.VoiceSession || model<IVoiceSession>('VoiceSession', VoiceSessionSchema)
+const ConversationSession = models.ConversationSession || model<IConversationSession>('ConversationSession', ConversationSessionSchema)
 
-export default VoiceSession
+export default ConversationSession
