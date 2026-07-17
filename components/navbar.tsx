@@ -36,9 +36,9 @@ const Navbar = () => {
                   href={href}
                   key={label}
                   className={cn(
-                    'text-xl font-normal',
+                    'text-lg font-medium',
                     isActive ?
-                      'text-amber-900' :
+                      'text-amber-900 border-b-2 border-amber-900 pb-0.5' :
                       'text-black hover:opacity-70'
                   )}
                 >
@@ -48,14 +48,14 @@ const Navbar = () => {
             })}
             <div className="flex gap-2 items-center">
               <Show when="signed-out">
-                <div className="text-xl font-normal text-black hover:opacity-70">
+                <div className="text-lg font-medium text-black hover:opacity-70">
                   <SignInButton />
                 </div>
               </Show>
               <Show when="signed-in">
                 <UserButton />
                 {user?.firstName && (
-                  <Link href="/subscriptions" className="text-xl text-black hover:opacity-70">
+                  <Link href="/subscriptions" className="text-lg font-sans font-medium text-black hover:opacity-70">
                     {user.firstName}
                   </Link>
                 )}

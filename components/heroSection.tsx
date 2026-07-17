@@ -15,7 +15,7 @@ const HeroSection = () => {
             Your Library
           </h1>
           <p className="text-md text-secondary-foreground max-w-md font-serif mb-6">
-            Organize your collection, explore new worlds, and keep track of your reading journey all in one place.
+            Organize your collection, and keep track of your reading journey all in one place.
           </p>
           <Button
             asChild
@@ -23,7 +23,7 @@ const HeroSection = () => {
           >
             <Link href="/books/new" className="inline-flex items-center gap-2">
               <Plus size={20} />
-              <span>Add New Book</span>
+              <span className="text-lg font-serif font-bold">Add New Book</span>
             </Link>
           </Button>
         </div>

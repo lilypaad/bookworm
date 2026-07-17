@@ -8,7 +8,7 @@ const BookCard = ({ title, author, coverURL, slug }: BookCardProps) => {
   return (
     <Link href={`/books/${slug}`}>
       <article className="bg-white rounded-xl">
-        <figure className="flex flex-col gap-2">
+        <figure className="flex flex-col gap-2 p-4">
           <div className="w-full">
             <Image src={coverURL} alt={title} width={133} height={200} className="h-48 w-auto mx-auto" />
           </div>
