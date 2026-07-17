@@ -22,6 +22,7 @@ function VapiControls({ book }: { book: IBook }) {
             width={120}
             height={180}
             className="rounded-lg shadow-md object-cover md:w-30 w-24 aspect-2/3"
+            loading="eager"
           />
           {(status === 'speaking' || status === 'thinking') && (
             <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 w-15 h-15 bg-white rounded-full animate-ping pointer-events-none" />
