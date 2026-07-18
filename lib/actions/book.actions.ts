@@ -137,6 +137,26 @@ export async function getAllBooks() {
   }
 }
 
+export async function getBooksByUser(userId: string | null) {
+  try {
+    await connectToDatabase()
+
+    const books = await Book.find({ clerkId: userId }).sort({ createdAt: -1 }).lean()
+
+    return {
+      success: true,
+      data: serialiseData(books),
+    }
+  }
+  catch(e) {
+    console.error('Error connecting to database', e)
+    return {
+      success: false,
+      error: e
+    }
+  }
+}
+
 export async function getBookBySlug(slug: string) {
   try {
     await connectToDatabase()
