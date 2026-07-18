@@ -4,10 +4,10 @@ import BookList from "@/components/BookList";
 
 function LibraryPage() {
   return (
-    <>
+    <div className="container mx-auto">
       <HeroSection />
       <BookList />
-    </>
+    </div>
   )
 }
 

@@ -8,7 +8,7 @@ const Page = async () => {
   const session = await auth()
 
   return (
-    <main className="container mx-auto flex flex-col">
+    <main className="flex flex-col">
       {session.userId && <LibraryPage />}
       {!session.userId && <LandingPage />}
     </main>
