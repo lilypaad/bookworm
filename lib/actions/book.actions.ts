@@ -1,7 +1,9 @@
 'use server'
 
+import mongoose from "mongoose";
+
 import { connectToDatabase } from "@/database/mongoose";
-import { generateSlug, serialiseData } from "@/lib/utils";
+import { escapeRegex, generateSlug, serialiseData } from "@/lib/utils";
 import { CreateBook, TextSegment } from "@/types";
 import Book from "@/database/models/book.model";
 import BookSegment from "@/database/models/book-segment.model";
@@ -164,19 +166,51 @@ export async function searchBookSegments(bookId: string, query: string, limit: n
   try {
     await connectToDatabase()
 
-    const segments = await BookSegment.find(
-      { bookId, $text: { $search: query } },
-      { score: { $meta: "textScore" } }
-    )
-      .sort({ score: { $meta: "textScore" } })
-      .limit(limit)
-      .lean()
+    const bookObjectId = new mongoose.Types.ObjectId(bookId)
+
+    console.log(`Searching for "${query}" in book ${bookId}`)
+
+    let segments: Record<string, unknown>[] = []
+
+    try {
+      segments = await BookSegment.find({ bookId: bookObjectId, $text: { $search: query } })
+        .select('_id bookId content segmentIndex pageNumber wordCount')
+        .sort({ score: { $meta: "textScore" } })
+        .limit(limit)
+        .lean()
+    }
+    catch {
+      // Text index might not exist, default to blank array
+      segments = []
+    }
+
+    // Fallback: regex search matching any keyword
+    if(segments.length <= 0) {
+      const keywords = query.split('/\s+/').filter((k) => k.length > 2)
+      const pattern = keywords.map(escapeRegex).join('|')
+
+      if(keywords.length === 0) {
+        return {
+          success: true,
+          data: []
+        }
+      }
+
+      segments = await BookSegment.find({ bookId: bookObjectId, content: { $regex: pattern, $options: 'i' } })
+        .select('_id bookId content segmentIndex pageNumber wordCount')
+        .sort({ segmentIndex: 1 })
+        .limit(limit)
+        .lean()
+    }
+
+    console.log(`Found ${segments.length} results in book ${bookId}`)
 
     return {
       success: true,
       data: serialiseData(segments)
     }
-  } catch (e) {
+  }
+  catch (e) {
     console.error('Error searching book segments', e)
     return { success: false, error: e }
   }

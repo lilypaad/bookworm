@@ -141,3 +141,8 @@ export const getVoice = (voice?: string) => {
   // Default fallback
   return voiceOptions[DEFAULT_VOICE];
 };
+
+// Escape regex special characters
+export function escapeRegex(str: string): string {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
