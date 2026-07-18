@@ -1,14 +1,16 @@
 import React from 'react'
+import { auth } from "@clerk/nextjs/server";
 
-import HeroSection from '@/components/heroSection'
-import BookList from "@/components/BookList"
+import LibraryPage from "@/components/LibraryPage";
+import LandingPage from "@/components/LandingPage";
 
 const Page = async () => {
+  const session = await auth()
+
   return (
     <main className="container mx-auto flex flex-col">
-      <HeroSection />
-
-      <BookList />
+      {session.userId && <LibraryPage />}
+      {!session.userId && <LandingPage />}
     </main>
   )
 }

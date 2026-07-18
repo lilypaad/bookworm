@@ -29,14 +29,14 @@ const Navbar = () => {
 
           {/* navbar items */}
           <nav className="flex gap-x-7 items-center overflow-x-auto">
-            {navItems.map(({ label, href }) => {
+            {user && navItems.map(({ label, href }) => {
               const isActive = pathName === href || (href !== '/' && pathName.startsWith(href))
               return (
                 <Link
                   href={href}
                   key={label}
                   className={cn(
-                    'text-lg font-medium',
+                    'text-md font-medium',
                     isActive ?
                       'text-amber-900 border-b-2 border-amber-900 pb-0.5' :
                       'text-black hover:opacity-70'
@@ -48,14 +48,14 @@ const Navbar = () => {
             })}
             <div className="flex gap-2 items-center">
               <Show when="signed-out">
-                <div className="text-lg font-medium text-black hover:opacity-70">
+                <div className="text-md font-medium text-black hover:opacity-70">
                   <SignInButton />
                 </div>
               </Show>
               <Show when="signed-in">
                 <UserButton />
                 {user?.firstName && (
-                  <Link href="/subscriptions" className="text-lg font-sans font-medium text-black hover:opacity-70">
+                  <Link href="/subscriptions" className="text-md font-sans font-medium text-black hover:opacity-70">
                     {user.firstName}
                   </Link>
                 )}
