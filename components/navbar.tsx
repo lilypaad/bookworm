@@ -13,6 +13,11 @@ const navItems = [
   { label: "Pricing", href: "/subscriptions" },
 ]
 
+const navItemsSignedOut = [
+  { label: "Pricing", href: "/subscriptions" },
+  { label: "Sign In", href: "/sign-in" },
+]
+
 const Navbar = () => {
   const pathName = usePathname()
   const { user } = useUser()
@@ -47,8 +52,17 @@ const Navbar = () => {
                 </Link>
               )
             })}
-            <div className="flex gap-2 items-center">
+            <div className="flex gap-7 items-center">
               <Show when="signed-out">
+                <Link href="/subscriptions" key="pricing" className={cn(
+                  'text-md font-medium',
+                  pathName === '/subscriptions' || pathName.startsWith('subscriptions') ?
+                    'text-amber-900 border-b-2 border-amber-900 pb-0.5' :
+                    'text-black hover:opacity-70'
+                )}
+                >
+                  Pricing
+                </Link>
                 <div className="text-md font-medium text-black hover:opacity-70">
                   <SignInButton />
                 </div>
