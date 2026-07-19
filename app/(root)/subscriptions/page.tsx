@@ -1,6 +1,7 @@
 import React from 'react'
 import type { Metadata } from "next";
 import { PricingTable } from "@clerk/nextjs";
+import { Spinner } from "@/components/ui/spinner";
 
 export const metadata: Metadata = {
   title: "Subscriptions · Bookworm",
@@ -39,7 +40,14 @@ function Page() {
         </section>
 
         <div className="pricing-table-wrapper">
-          <PricingTable appearance={pricingTableAppearance} />
+          <PricingTable
+            appearance={pricingTableAppearance}
+            fallback={
+              <Spinner
+                className="mx-auto size-16 align-middle my-16"
+              />
+            }
+          />
         </div>
       </div>
     </main>
