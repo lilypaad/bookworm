@@ -7,9 +7,26 @@ import {Mic, MicOff} from "lucide-react";
 import useVapi from "@/hooks/useVapi";
 import {IBook} from "@/types";
 import Transcript from "@/components/Transcript";
+import {cn} from "@/lib/utils";
 
 function VapiControls({ book }: { book: IBook }) {
-  const { status, isActive, messages, currentMessage, currentUserMessage, duration, limitError, start, stop, clearErrors } = useVapi(book)
+  const {
+    status,
+    isActive,
+    messages,
+    currentMessage,
+    currentUserMessage,
+    duration,
+    maxDurationSeconds,
+    start,
+    stop,
+  } = useVapi(book)
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
 
   return (
     <div className="flex flex-col gap-2">
@@ -54,7 +71,12 @@ function VapiControls({ book }: { book: IBook }) {
 
           <div className="flex flex-wrap gap-2 mt-auto">
             <div className="vapi-status-indicator">
-              <span className="vapi-status-dot" />
+              <span className={cn(
+                "vapi-status-dot",
+                isActive ? "bg-green-500" : "bg-gray-400",
+                status === 'thinking' && "bg-amber-500 animate-pulse",
+                status === 'speaking' && "bg-blue-500 animate-pulse"
+              )} />
               <span className="vapi-status-text">{status}</span>
             </div>
 
@@ -63,7 +85,9 @@ function VapiControls({ book }: { book: IBook }) {
             </div>
 
             <div className="vapi-status-indicator">
-              <span className="vapi-status-text">0:00/15:00</span>
+              <span className="vapi-status-text">
+                {formatTime(duration)}/{formatTime(maxDurationSeconds)}
+              </span>
             </div>
           </div>
         </div>

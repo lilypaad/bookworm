@@ -1,11 +1,13 @@
 import {useEffect, useRef, useState} from "react";
 import {useAuth} from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 import Vapi from '@vapi-ai/web'
 
 import {IBook, Messages} from "@/types";
 import {ASSISTANT_ID, DEFAULT_VOICE, VAPI_API_KEY, VOICE_SETTINGS} from "@/lib/constants";
 import {endConversationSession, startConversationSession} from "@/lib/actions/session.actions";
 import {getVoice} from "@/lib/utils";
+import { useSubscription } from "@/hooks/useSubscription";
 
 export type CallStatus = 'idle' | 'connecting' | 'starting' | 'listening' | 'thinking' | 'speaking'
 
@@ -36,7 +38,8 @@ function getVapi() {
 
 function useVapi(book: IBook) {
   const { userId } = useAuth()
-  // TODO: implement limits
+  const router = useRouter()
+  const { limits } = useSubscription()
 
   const [status, setStatus] = useState<CallStatus>('idle')
   const [messages, setMessages] = useState<Messages[]>([])
@@ -55,10 +58,8 @@ function useVapi(book: IBook) {
 
   const isActive = status === 'listening' || status === 'thinking' || status === 'speaking' || status === 'starting'
 
-  // const maxDurationRef = useLatestRef(limits.maxSessionMinutes * 60)
-  // const maxDurationSeconds
-  // const remainingSeconds
-  // const showTimeWarning
+  const maxDurationSeconds = limits.maxSessionDurationMinutes * 60
+  const maxDurationRef = useLatestRef(maxDurationSeconds)
 
   // Set up Vapi event listeners
   useEffect(() => {
@@ -78,14 +79,9 @@ function useVapi(book: IBook) {
             setDuration(newDuration);
 
             // Check duration limit
-            // if (newDuration >= maxDurationRef.current) {
-            //     getVapi().stop();
-            //     setLimitError(
-            //         `Session time limit (${Math.floor(
-            //             maxDurationRef.current / SECONDS_PER_MINUTE,
-            //         )} minutes) reached. Upgrade your plan for longer sessions.`,
-            //     );
-            // }
+            if (newDuration >= maxDurationRef.current) {
+              getVapi().stop();
+            }
           }
         }, TIMER_INTERVAL_MS);
       },
@@ -284,7 +280,7 @@ function useVapi(book: IBook) {
 
   return {
     status, isActive, messages, currentMessage, currentUserMessage, duration, limitError, start, stop, clearErrors,
-    // maxDurationSeconds, remainingSeconds, showTimeWarning,
+    maxDurationSeconds,
   }
 }
 

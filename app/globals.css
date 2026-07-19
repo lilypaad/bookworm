@@ -177,7 +177,7 @@
     @apply text-muted-foreground;
   }
   .transcript-messages {
-    @apply flex-1 flex flex-col gap-6 w-full overflow-y-auto p-12 scroll-smooth;
+    @apply flex-1 flex flex-col gap-2 w-full overflow-y-auto p-12 scroll-smooth;
   }
   .transcript-message {
     @apply flex w-full;
