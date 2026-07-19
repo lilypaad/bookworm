@@ -11,16 +11,16 @@ export const metadata: Metadata = {
 // so colours adapt automatically to light and dark mode instead of being hard-coded.
 const pricingTableAppearance = {
   variables: {
-    colorPrimary: 'var(--primary)',
-    colorBackground: 'var(--card)',
-    colorText: 'var(--foreground)',
-    colorTextSecondary: 'var(--muted-foreground)',
+    colorPrimary: 'var(--color-foreground)',
+    colorBackground: 'var(--color-card)',
+    colorText: 'var(--color-foreground)',
+    colorTextSecondary: 'var(--color-secondary)',
     colorInputBackground: 'var(--card)',
     colorInputText: 'var(--foreground)',
     colorNeutral: 'var(--foreground)',
     colorDanger: 'var(--destructive)',
     borderRadius: 'var(--radius)',
-    fontFamily: 'var(--font-sans)',
+    fontFamily: 'var(--font-serif)',
   },
 }
 

@@ -19,7 +19,7 @@ const Navbar = () => {
 
   return (
     // <header className="container mx-auto">
-    <header className="fixed w-full z-50 bg-background">
+    <header className="fixed w-full z-0 bg-background">
       <div className="container mx-auto">
         <div className="py-4 flex justify-between items-center">
           {/* Logo */}
@@ -55,11 +55,6 @@ const Navbar = () => {
               </Show>
               <Show when="signed-in">
                 <UserButton />
-                {user?.firstName && (
-                  <Link href="/subscriptions" className="text-md font-sans font-medium text-black hover:opacity-70">
-                    {user.firstName}
-                  </Link>
-                )}
               </Show>
             </div>
           </nav>
