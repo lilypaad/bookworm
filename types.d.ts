@@ -92,3 +92,22 @@ export interface EndSessionResult {
   success: boolean;
   error?: string;
 }
+
+// SUBSCRIPTION & BILLING TYPES
+
+// The plan slugs configured in the Clerk dashboard. Users without a subscription are on the free tier.
+export type PlanSlug = 'free' | 'standard' | 'pro';
+
+export interface PlanLimits {
+  maxBooks: number;
+  maxSessionsPerMonth: number; // Number.POSITIVE_INFINITY represents unlimited
+  maxSessionDurationMinutes: number;
+}
+
+export interface UserPlan {
+  plan: PlanSlug;
+  limits: PlanLimits;
+}
+
+// Clerk's `has()` helper, narrowed to the plan check used across the app
+export type HasPlanFn = (params: { plan: string }) => boolean;

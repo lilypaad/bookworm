@@ -206,6 +206,37 @@
   .back-btn-floating {
     @apply fixed top-24 left-6 w-12 h-12 bg-card rounded-full border border-border shadow-md flex items-center justify-center hover:bg-gray-50 transition-colors z-50;
   }
+
+  /* Clerk <PricingTable /> styling - matches the app's design system.
+     Colours reference the @theme tokens defined above so light/dark modes adapt automatically. */
+  .pricing-table-wrapper {
+    @apply max-w-5xl mx-auto w-full;
+  }
+  .pricing-table-wrapper .cl-pricingTable {
+    gap: 1.5rem;
+  }
+  .pricing-table-wrapper .cl-pricingTableCard {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    background-color: var(--card);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  .pricing-table-wrapper .cl-pricingTableCard[data-highlighted="true"] {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 1px var(--primary), 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+  .pricing-table-wrapper .cl-pricingTableCardTitle {
+    font-family: var(--font-serif);
+    color: var(--foreground);
+  }
+  .pricing-table-wrapper .cl-pricingTableCardFeePeriod,
+  .pricing-table-wrapper .cl-pricingTableCardDescription {
+    color: var(--muted-foreground);
+  }
+  .pricing-table-wrapper .cl-pricingTableCardFeatures {
+    background-color: var(--accent);
+    border-top: 1px solid var(--border);
+  }
 }
 
 @layer base {

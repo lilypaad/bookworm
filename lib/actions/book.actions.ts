@@ -8,6 +8,8 @@ import { CreateBook, TextSegment } from "@/types";
 import Book from "@/database/models/book.model";
 import BookSegment from "@/database/models/book-segment.model";
 import { DEFAULT_VOICE, voiceOptions } from "@/lib/constants";
+import { getUserPlan } from "@/lib/actions/subscriptions.actions";
+import { isUnlimited } from "@/lib/subscription-constants";
 
 export async function checkBookExists(title: string) {
   try {
@@ -53,7 +55,21 @@ export async function createBook(data: CreateBook) {
       }
     }
 
-    // TODO: check subscription limits before creating a book
+    // Check subscription limits before creating a book
+    const { plan, limits } = await getUserPlan()
+
+    if(!isUnlimited(limits.maxBooks)) {
+      const bookCount = await Book.countDocuments({ clerkId: data.clerkId })
+
+      if(bookCount >= limits.maxBooks) {
+        return {
+          success: false,
+          limitReached: true,
+          error: `You've reached the ${plan} plan limit of ${limits.maxBooks} `
+            + `book${limits.maxBooks === 1 ? '' : 's'}. Upgrade your plan to add more books.`,
+        }
+      }
+    }
 
     const book = await Book.create({ ...data, slug, totalSegments: 0 })
 

@@ -146,6 +146,13 @@ function UploadForm() {
         await deleteBlob(uploadedPdfBlob.url)
         await deleteBlob(coverUrl)
 
+        // Surface plan-limit messages and point the user to the pricing page
+        if(book.limitReached) {
+          toast.error(typeof book.error === 'string' ? book.error : 'Book limit reached. Upgrade your plan to add more books.')
+          router.push('/subscriptions')
+          return
+        }
+
         throw new Error('Failed to create book')
       }
       if(book.alreadyExists) {
